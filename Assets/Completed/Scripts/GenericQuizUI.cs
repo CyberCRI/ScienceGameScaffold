@@ -13,7 +13,11 @@ public class GenericQuizUI : MonoBehaviour {
             _instance = this;
         } else {
             Destroy(this);
-        }
+        }       
+    }
+    
+    void Start() {
+        GameStateMachine.updateScore();
     }
     
     private static GenericQuizUI safeGet() {

@@ -39,15 +39,6 @@ public class QuizManager : MonoBehaviour {
         QUESTION2WAITINGANSWER = 3,
         END = 4
     }
-
-	// Use this for initialization
-	void Start () {
-        Debug.Log("QuizManager starts");
-	}
-
-	void Awake () {
-        Debug.Log("QuizManager awakes");
-	}
 	
 	// Update is called once per frame
 	void Update () {

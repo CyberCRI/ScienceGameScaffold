@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameStateMachine : MonoBehaviour {
     
     private static GameStateMachine _instance;
     private int score = 0;    
+    public Text scoreText;
     
     void Awake() {
         if(null == _instance) {
@@ -13,6 +15,7 @@ public class GameStateMachine : MonoBehaviour {
         } else {
             Destroy(this);
         }
+        updateScore();
     }
     
     private static GameStateMachine safeGet() {
@@ -26,8 +29,20 @@ public class GameStateMachine : MonoBehaviour {
     }
     
     static public void addScore(int pointsGot) {
-        safeGet().score += pointsGot;
-        Debug.Log("new score: "+safeGet().score);
+        GameStateMachine gsm = safeGet();
+        gsm.score += pointsGot;
+        updateScore();
     } 
     
+    static public void updateScore() {
+        GameStateMachine gsm = safeGet();
+        if(null == gsm.scoreText) {
+            gsm.scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
+        }
+        gsm.scoreText.text = gsm.score+" points";
+    }
+    
+    static public int getScore() {
+        return safeGet().score;
+    }
 }
