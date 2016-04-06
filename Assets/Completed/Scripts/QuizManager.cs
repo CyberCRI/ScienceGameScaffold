@@ -21,14 +21,12 @@ public class QuizManager : MonoBehaviour {
     public Text summary;
     public GameObject validateButton;
     public GameObject continueButton;
-    public GameObject rightInfos;
-    
+    public int pointsPerCorrectAnswer = 1;
     
     private QuizState state = QuizState.START;
     public GameObject toggle;
     public RectTransform toggle1;
     public RectTransform toggle2;
-    int score;
     
     List<string> goodAnswers = new List<string>();
     List<Answer> answerList = new List<Answer>();
@@ -44,6 +42,11 @@ public class QuizManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        Debug.Log("QuizManager starts");
+	}
+
+	void Awake () {
+        Debug.Log("QuizManager awakes");
 	}
 	
 	// Update is called once per frame
@@ -55,7 +58,6 @@ public class QuizManager : MonoBehaviour {
             validateButton.active = true;
             summary.gameObject.active = false;
             continueButton.active = false;
-            rightInfos.active = true;
             
             toggle1.gameObject.active = false;
             toggle2.gameObject.active = false;
@@ -139,7 +141,7 @@ public class QuizManager : MonoBehaviour {
                 foreach (string answerString in goodAnswers)
                 {
                     if (answerString == answerObject.answerText.text) {
-                        score++;
+                        GameStateMachine.addScore(pointsPerCorrectAnswer);
                         break;
                     }
                 }
@@ -148,8 +150,6 @@ public class QuizManager : MonoBehaviour {
         
         state++;
         clearAnswers();
-        
-        Debug.Log("score="+score);
     }
     
     void clearAnswers() {
@@ -161,7 +161,8 @@ public class QuizManager : MonoBehaviour {
     
     // exits quiz
     public void onContinue() {
-        this.transform.parent.parent.gameObject.active = false;
+        GenericQuizUI.close();
+        state = QuizState.START;
     }
 }
 

@@ -212,6 +212,8 @@ namespace Completed
 				
 				//Disable the soda object the player collided with.
 				other.gameObject.SetActive (false);
+                
+                GenericQuizUI.open();
 			}
 		}
 		
